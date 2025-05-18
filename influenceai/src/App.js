@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { ProfileInputPage } from "./ProfileInputPage.tsx";
-import { DashboardPage } from "./Dashboard.tsx";
-import { HomePage } from "./Homepage.tsx";
+import { ProfileInputPage } from "./ProfileInputPage.js";
+import { DashboardPage } from "./Dashboard.js";
+import { HomePage } from "./Homepage.js";
 import './index.css';
 
 function App() {
