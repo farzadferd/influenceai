@@ -1,21 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { Zap, BarChart3, Users, Lightbulb, Home, Settings, LogOut } from "lucide-react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
+import { Zap, BarChart3, Users, Lightbulb, Home, Settings } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleLogout = () => {
-    toast({
-      title: "Logged out successfully",
-      description: "You have been logged out of InfluenceAI",
-    });
-    navigate("/");
-  };
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: Home },
@@ -56,18 +45,10 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Settings, Logout & Profile */}
+          {/* Settings & Profile */}
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="icon">
               <Settings className="w-5 h-5" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={handleLogout}
-              title="Logout"
-            >
-              <LogOut className="w-5 h-5" />
             </Button>
             <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-semibold">JD</span>
