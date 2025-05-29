@@ -8,35 +8,19 @@ import { Zap, Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
-const Signup = () => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match",
-        variant: "destructive"
-      });
-      return;
-    }
-    
+    // Simulate login
     toast({
-      title: "Account Created!",
-      description: "Welcome to InfluenceAI. Let's get you started!",
+      title: "Login Successful!",
+      description: "Welcome back to InfluenceAI",
     });
     navigate("/dashboard");
   };
@@ -56,34 +40,19 @@ const Signup = () => {
 
         <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-gray-800">Create Your Account</CardTitle>
-            <p className="text-gray-600">Start your social media growth journey</p>
+            <CardTitle className="text-2xl font-bold text-gray-800">Welcome Back</CardTitle>
+            <p className="text-gray-600">Sign in to your account to continue</p>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="h-12"
-                />
-              </div>
-
-              <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                  name="email"
                   type="email"
                   placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   className="h-12"
                 />
@@ -94,11 +63,10 @@ const Signup = () => {
                 <div className="relative">
                   <Input
                     id="password"
-                    name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create a strong password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className="h-12 pr-12"
                   />
@@ -112,33 +80,19 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                  className="h-12"
-                />
-              </div>
-
               <Button
                 type="submit"
                 className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-lg"
               >
-                Create Account
+                Sign In
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Already have an account?{" "}
-                <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
-                  Sign in
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+                  Sign up
                 </Link>
               </p>
             </div>
@@ -155,4 +109,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
