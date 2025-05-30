@@ -41,6 +41,7 @@ cd influenceai
 
 cd backend
 ./mvnw spring-boot:run
+
 or use your IDE to run the Spring Boot application
 
 cd frontend
