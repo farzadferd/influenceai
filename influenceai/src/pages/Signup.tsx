@@ -23,23 +23,40 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: "Passwords do not match",
-        variant: "destructive"
-      });
+      toast({ title: "Error", description: "Passwords do not match", variant: "destructive" });
       return;
     }
-    
-    toast({
-      title: "Account Created!",
-      description: "Welcome to InfluenceAI. Let's get you started!",
-    });
-    navigate("/dashboard");
+  
+    try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),       // trim here
+          email: formData.email.trim(),     // trim here
+          password: formData.password.trim(), // trim here just to be safe
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        // Backend sends { error: "message" }
+        throw new Error(data.error || "Signup failed");
+      }
+  
+      localStorage.setItem("token", data.token);
+  
+      toast({ title: "Account Created!", description: "Welcome to InfluenceAI" });
+      navigate("/dashboard");
+    } catch (err) {
+      toast({ title: "Signup Failed", description: (err as Error).message, variant: "destructive" });
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-6">

@@ -15,14 +15,27 @@ const Login = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login
-    toast({
-      title: "Login Successful!",
-      description: "Welcome back to InfluenceAI",
-    });
-    navigate("/dashboard");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password: password.trim()}),
+      });
+  
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || "Login failed");
+      }  
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+  
+      toast({ title: "Login Successful!", description: "Welcome back to InfluenceAI" });
+      navigate("/dashboard");
+    } catch (err) {
+      toast({ title: "Login Failed", description: (err as Error).message, variant: "destructive" });
+    }
   };
 
   return (
